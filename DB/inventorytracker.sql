@@ -23,6 +23,10 @@ DROP TABLE IF EXISTS `inventory` ;
 CREATE TABLE IF NOT EXISTS `inventory` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `item_name` VARCHAR(200) NOT NULL,
+  `quantity` INT NOT NULL,
+  `unit_price` DOUBLE NULL,
+  `category` VARCHAR(45) NULL,
+  `location` VARCHAR(200) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -42,7 +46,9 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `inventorytrackerdb`;
-INSERT INTO `inventory` (`id`, `item_name`) VALUES (1, 'Hammer Ball-Peen');
+INSERT INTO `inventory` (`id`, `item_name`, `quantity`, `unit_price`, `category`, `location`) VALUES (1, 'Hammer Ball-Peen', 3, 15.45, 'Tools', 'Tool Storage');
+INSERT INTO `inventory` (`id`, `item_name`, `quantity`, `unit_price`, `category`, `location`) VALUES (2, 'Hand Sanitizer', 15, 6.54, 'Health/Sanitation', 'Supply Office Storage');
+INSERT INTO `inventory` (`id`, `item_name`, `quantity`, `unit_price`, `category`, `location`) VALUES (3, 'Radio RM-34', 3, 265.35, 'Electronics', 'Supply Office Storage');
 
 COMMIT;
 
