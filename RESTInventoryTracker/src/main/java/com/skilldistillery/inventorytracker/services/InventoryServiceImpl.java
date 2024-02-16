@@ -20,4 +20,34 @@ public class InventoryServiceImpl implements InventoryService {
 		return invRepo.findAll();
 	}
 
+	@Override
+	public Inventory show(int id) {
+		
+		return invRepo.searchById(id);
+	}
+
+	@Override
+	public Inventory create(Inventory inventory) {
+		return invRepo.save(inventory);
+	}
+
+	@Override
+	public Inventory update(Inventory inventory, int id) {
+		Inventory original = invRepo.searchById(id);
+		
+		original.setItemName(inventory.getItemName());
+		original.setQuantity(inventory.getQuantity());
+		original.setUnitPrice(inventory.getUnitPrice());
+		original.setCategory(inventory.getCategory());
+		original.setLocation(inventory.getLocation());
+		
+		return invRepo.save(original);
+	}
+
+	@Override
+	public boolean delete(int id) {
+		invRepo.deleteById(id);
+		return !invRepo.existsById(id);
+	}
+
 }
