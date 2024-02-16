@@ -21,4 +21,6 @@ public class InventoryController {
 	public List<Inventory> index() {
 		return invService.index();
 	}
+	
+	
 }

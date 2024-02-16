@@ -19,6 +19,15 @@ public class Inventory {
 	@Column(name= "item_name")
 	private String itemName;
 	
+	private int quantity;
+	
+	@Column(name= "unit_price")
+	private double unitPrice;
+	
+	private String category;
+	
+	private String location;
+	
 	public Inventory() {}
 
 	public int getId() {
@@ -35,6 +44,38 @@ public class Inventory {
 
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public double getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	@Override
@@ -56,8 +97,8 @@ public class Inventory {
 
 	@Override
 	public String toString() {
-		return "Inventory [id=" + id + ", itemName=" + itemName + "]";
+		return "Inventory [id=" + id + ", itemName=" + itemName + ", quantity=" + quantity + ", unitPrice=" + unitPrice
+				+ ", category=" + category + ", location=" + location + "]";
 	}
-	
 	
 }
