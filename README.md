@@ -2,7 +2,10 @@
 
 ## Project Description
 
-This project is an inventory tracker application designed to help users manage their inventory of items. It provides CRUD (Create, Read, Update, Delete) functionality for inventory items, allowing users to add, view, update, and remove items from their inventory. Currently only functional via Postman.
+This project is an inventory tracker application designed to help users manage their inventory of items. It provides CRUD (Create, Read, Update, Delete) functionality for inventory items, allowing users to add, view, update, and remove items from their inventory. 
+
+- Currently only functional via Postman. 
+- Inventory database has items in inventory 1-3 starting out.
 
 ## Technologies Used
 
@@ -21,7 +24,7 @@ This project is an inventory tracker application designed to help users manage t
 | GET       | `/api/inventory/3`   |              | JSON of _item_ `3` | 200,404 |
 | POST      | `/api/inventory`      | JSON of a new _item_ entity  | JSON of created _item_ | 201,400 |
 | PUT       | `/api/inventory/3`   | JSON of a new version of _item_ `3` | JSON of updated _item_ | 200,404,400 |
-| DELETE    | `/api/inventory/3`   |              |               | 204,404,400|
+| DELETE    | `/api/inventory/3`   |              |               | 204,404|
 
 ## JSON Examples
 

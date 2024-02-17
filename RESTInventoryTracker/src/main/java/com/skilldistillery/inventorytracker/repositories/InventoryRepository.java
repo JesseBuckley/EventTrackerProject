@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.skilldistillery.inventorytracker.entities.Inventory;
 
-public interface InventoryRepository extends JpaRepository<Inventory, Integer>{
+public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
 	Inventory searchById(int id);
 }

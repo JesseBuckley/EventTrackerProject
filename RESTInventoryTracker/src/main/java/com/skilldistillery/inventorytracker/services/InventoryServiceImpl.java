@@ -10,10 +10,10 @@ import com.skilldistillery.inventorytracker.repositories.InventoryRepository;
 
 @Service
 public class InventoryServiceImpl implements InventoryService {
-	
+
 	@Autowired
 	private InventoryRepository invRepo;
-	
+
 	@Override
 	public List<Inventory> index() {
 
@@ -22,7 +22,7 @@ public class InventoryServiceImpl implements InventoryService {
 
 	@Override
 	public Inventory show(int id) {
-		
+
 		return invRepo.searchById(id);
 	}
 
@@ -34,13 +34,13 @@ public class InventoryServiceImpl implements InventoryService {
 	@Override
 	public Inventory update(Inventory inventory, int id) {
 		Inventory original = invRepo.searchById(id);
-		
+
 		original.setItemName(inventory.getItemName());
 		original.setQuantity(inventory.getQuantity());
 		original.setUnitPrice(inventory.getUnitPrice());
 		original.setCategory(inventory.getCategory());
 		original.setLocation(inventory.getLocation());
-		
+
 		return invRepo.save(original);
 	}
 
