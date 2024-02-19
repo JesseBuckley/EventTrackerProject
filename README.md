@@ -57,3 +57,5 @@ This project is an inventory tracker application designed to help users manage t
 - Cemented my understanding of Rest controllers, Mapping, and Crud operations.
 
 - Using a Repository for my Entity streamlines the developing process.
+
+AWS Deployment link: http://44.222.56.254:8080/RESTInventoryTracker/api/inventory
