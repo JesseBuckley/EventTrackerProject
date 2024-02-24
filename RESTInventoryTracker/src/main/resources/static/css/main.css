@@ -1,3 +1,9 @@
 body {
-	background-color: fuchsia;
+	background-color: antiquewhite;
+}
+
+/* Custom CSS to adjust table width */
+.table-responsive table {
+    width: 50%; /* Set table width to 100% of its container */
+    max-width: 100%; /* Ensure table does not exceed the width of its container */
 }
