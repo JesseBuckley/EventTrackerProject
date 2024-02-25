@@ -1,47 +1,131 @@
 console.log('script.js');
 
 window.addEventListener('load', function(e) {
-	console.log('page loaded');
-	
-	loadAllInventory();
+    console.log('page loaded');
+    
+    loadAllInventory();
 });
 
 function loadAllInventory() {
-	let xhr = new XMLHttpRequest();
-	xhr.open('GET', 'api/inventory');
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState === xhr.DONE) {
-			if(xhr.status === 200) {
-				let inventory = JSON.parse(xhr.responseText);
-				displayInventoryList(inventory);
-				
-			} else {
-				
-			}
-		}
-		
-	};
-	xhr.send();
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', 'api/inventory');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === xhr.DONE) {
+            if(xhr.status === 200) {
+                let inventory = JSON.parse(xhr.responseText);
+                displayInventoryList(inventory);
+            } else {
+                console.error('Failed to fetch inventory:', xhr.status);
+            }
+        }
+    };
+    xhr.send();
 }
 
 function displayInventoryList(inventory) {
     let tableBody = document.getElementById('inventoryTableBody');
     tableBody.innerHTML = '';
-    
-    inventory.forEach(function(item) {
-        let row = document.createElement('tr');
-        row.addEventListener('click', function() {
-            displayItemDetails(item.id);
+
+    if (inventory && inventory.length > 0) {
+        inventory.forEach(function(item) {
+            let row = document.createElement('tr');
+
+            // Attach event listener to the row
+            row.addEventListener('click', function() {
+                console.log('Row clicked. Item ID:', item.id);
+                displayItemDetails(item.id);
+            });
+
+            row.innerHTML = `<td>${item.id}</td><td>${item.itemName}</td>`;
+            tableBody.appendChild(row);
         });
-        
-        row.innerHTML = `<td>${item.id}</td><td>${item.itemName}</td>`;
-        
-        tableBody.appendChild(row);
-    });
+    } else {
+        console.log('Inventory is empty');
+    }
 }
 
-function displayItemDetails(itemId) {
-    fetch(`api/inventory/${itemId}`)
+function displayItemDetails(id) {
+    fetch(`api/inventory/${id}`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to fetch item details');
+        }
+        return response.json();
+    })
+    .then(item => {
+        // Create a div to contain the table
+        let tableContainer = document.createElement('div');
+        tableContainer.style.width = '60%'; // Set the width of the container
+        tableContainer.style.margin = 'left'; // Center the container
+
+        let itemDetailsTable = document.createElement('table');
+        itemDetailsTable.classList.add('table', 'table-striped', 'text-left');
+
+        // Create table rows and cells for each item detail
+        Object.entries(item).forEach(([key, value]) => {
+            let row = itemDetailsTable.insertRow();
+            let keyCell = row.insertCell(0);
+            let valueCell = row.insertCell(1);
+            keyCell.textContent = key.charAt(0).toUpperCase() + key.slice(1); // Capitalize first letter
+            keyCell.style.fontWeight = 'bold'; 
+            keyCell.style.textAlign = 'left';
+            valueCell.textContent = value;
+            valueCell.style.textAlign = 'left';
+        });
+
+        let editButtonCell = itemDetailsTable.insertRow().insertCell(0);
+        let editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+        editButton.classList.add('btn', 'btn-primary');
+        editButton.addEventListener('click', function() {
+            editItem(id);
+        });
+        editButtonCell.appendChild(editButton);
+
+        let deleteButtonCell = itemDetailsTable.rows[itemDetailsTable.rows.length - 1].insertCell(1);
+        let deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.classList.add('btn', 'btn-danger');
+        deleteButton.addEventListener('click', function() {
+            deleteItem(id);
+        });
+        deleteButtonCell.appendChild(deleteButton);
+
+        let itemDetailsDiv = document.getElementById('itemDetailsDiv');
+        itemDetailsDiv.innerHTML = '';
+        tableContainer.appendChild(itemDetailsTable);
+        itemDetailsDiv.appendChild(tableContainer);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+function deleteItem(id) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('DELETE', `api/inventory/${id}`, true);
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 204) {
+                console.log('Delete success', xhr.status + ' id # ' + id);
+                
+                let itemDetailsDiv = document.getElementById('itemDetailsDiv');
+                itemDetailsDiv.innerHTML = '';
+                
+                
+                loadAllInventory(); // Reload inventory list
+            } else {
+                console.error('Failed to delete item:', xhr.status);
+            }
+        }
+    };
+
+    xhr.send();
+}
+
+function editItem(id) {
+    fetch(`api/inventory/${id}`)
     .then(response => {
         if (!response.ok) {
             throw new Error('Failed to fetch item details');
@@ -49,11 +133,88 @@ function displayItemDetails(itemId) {
         return response.json();
     })
     .then(item => {
-        let itemDetailsDiv = document.getElementById('itemDetailsDiv');
-        itemDetailsDiv.innerHTML = `
-            <h2>Item Details</h2><p>ID: ${item.id}</p><p>Name: ${item.itemName}</p><p>Quantity: ${item.quantity}</p><p>Unit Price: ${item.unitPrice}</p><p>Category: ${item.category}</p><p>Location: ${item.location}</p>`;
+        displayEditForm(item);
     })
     .catch(error => {
         console.error('Error:', error);
     });
+}
+
+function displayEditForm(item) {
+    let itemDetailsDiv = document.getElementById('itemDetailsDiv');
+    itemDetailsDiv.innerHTML = '';
+
+    let idInput = createInputField('ID', 'id', item.id, true); // Disable editing for ID
+    let nameInput = createInputField('Name', 'itemName', item.itemName);
+    let quantityInput = createInputField('Quantity', 'quantity', item.quantity);
+    let unitPriceInput = createInputField('Unit Price', 'unitPrice', item.unitPrice);
+    let categoryInput = createInputField('Category', 'category', item.category);
+    let locationInput = createInputField('Location', 'location', item.location);
+
+    itemDetailsDiv.appendChild(idInput);
+    itemDetailsDiv.appendChild(nameInput);
+    itemDetailsDiv.appendChild(quantityInput);
+    itemDetailsDiv.appendChild(unitPriceInput);
+    itemDetailsDiv.appendChild(categoryInput);
+    itemDetailsDiv.appendChild(locationInput);
+
+    let saveButton = document.createElement('button');
+    saveButton.textContent = 'Save';
+    saveButton.classList.add('btn', 'btn-primary');
+    saveButton.addEventListener('click', function() {
+        saveEditedItem(item.id);
+    });
+    itemDetailsDiv.appendChild(saveButton);
+}
+
+function createInputField(labelText, propertyName, value, disabled = false) {
+    let inputContainer = document.createElement('div');
+
+    let label = document.createElement('label');
+    label.textContent = labelText;
+    inputContainer.appendChild(label);
+
+    let input = document.createElement('input');
+    input.type = 'text';
+    input.value = value;
+    input.id = propertyName + 'Input'; 
+    input.disabled = disabled;
+    inputContainer.appendChild(input);
+
+    inputContainer.appendChild(document.createElement('br'));
+
+    return inputContainer;
+}
+
+function saveEditedItem(id) {
+    let itemName = document.getElementById('itemNameInput').value;
+    let quantity = document.getElementById('quantityInput').value;
+    let unitPrice = document.getElementById('unitPriceInput').value;
+    let category = document.getElementById('categoryInput').value;
+    let location = document.getElementById('locationInput').value;
+
+    let updatedItemData = {
+        itemName: itemName,
+        quantity: quantity,
+        unitPrice: unitPrice,
+        category: category,
+        location: location
+    };
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('PUT', `api/inventory/${id}`);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+				console.log('Update successful', xhr.status + ' id #' + id);
+                let itemDetailsDiv = document.getElementById('itemDetailsDiv');
+                itemDetailsDiv.innerHTML = '';
+                loadAllInventory(); // Reload inventory list
+            } else {
+                console.error('Failed to update item:', xhr.status);
+            }
+        }
+    };
+    xhr.send(JSON.stringify(updatedItemData));
 }
