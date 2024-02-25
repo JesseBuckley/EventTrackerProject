@@ -1,20 +1,21 @@
 # EventTrackerProject
 
+
 ## Project Description
 
-This project is an inventory tracker application designed to help users manage their inventory of items. It provides CRUD (Create, Read, Update, Delete) functionality for inventory items, allowing users to add, view, update, and remove items from their inventory. 
+This project is an inventory tracker application designed to help users manage their inventory of items. It provides CRUD (Create, Read, Update, Delete) functionality for inventory items, allowing users to add, view, update, and remove items from an inventory. 
 
-- Currently only functional via Postman. 
-- Inventory database has items in inventory 1-3 starting out.
 
 ## Technologies Used
 
 - Java
+- JavaScript
 - Spring Boot
 - SQL
 - REST
 - JPA
 - Postman
+
 
 ## REST Endpoints
 
@@ -52,10 +53,21 @@ This project is an inventory tracker application designed to help users manage t
 }
 ```
 
-# Lessons Learned
+## Future Goals
+
+- Add users accounts where they can make their own inventories of items.
+
+- Do more with the locations and maybe allow the users to put items in specific locations inventories and each location has its own inventory
+
+
+## Lessons Learned
 
 - Cemented my understanding of Rest controllers, Mapping, and Crud operations.
 
 - Using a Repository for my Entity streamlines the developing process.
 
+- Using my backend work to implement a fully functional frontend using JavaScript.
+
 AWS Deployment link: http://44.222.56.254:8080/RESTInventoryTracker/api/inventory
+
+

@@ -30,7 +30,6 @@ function displayInventoryList(inventory) {
         inventory.forEach(function(item) {
             let row = document.createElement('tr');
 
-            // Attach event listener to the row
             row.addEventListener('click', function() {
                 console.log('Row clicked. Item ID:', item.id);
                 displayItemDetails(item.id);
@@ -53,15 +52,14 @@ function displayItemDetails(id) {
         return response.json();
     })
     .then(item => {
-        // Create a div to contain the table
+
         let tableContainer = document.createElement('div');
-        tableContainer.style.width = '60%'; // Set the width of the container
-        tableContainer.style.margin = 'left'; // Center the container
+        tableContainer.style.width = '60%';
+        tableContainer.style.margin = 'left';
 
         let itemDetailsTable = document.createElement('table');
         itemDetailsTable.classList.add('table', 'table-striped', 'text-left');
 
-        // Create table rows and cells for each item detail
         Object.entries(item).forEach(([key, value]) => {
             let row = itemDetailsTable.insertRow();
             let keyCell = row.insertCell(0);
@@ -109,11 +107,8 @@ function deleteItem(id) {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 204) {
                 console.log('Delete success', xhr.status + ' id # ' + id);
-                
                 let itemDetailsDiv = document.getElementById('itemDetailsDiv');
                 itemDetailsDiv.innerHTML = '';
-                
-                
                 loadAllInventory(); // Reload inventory list
             } else {
                 console.error('Failed to delete item:', xhr.status);
@@ -217,4 +212,39 @@ function saveEditedItem(id) {
         }
     };
     xhr.send(JSON.stringify(updatedItemData));
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+	document.getElementById('addItemForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    addItem();
+});
+});
+
+
+function addItem() {
+    let newItemData = {
+        itemName: document.getElementById('itemNameInput').value,
+        quantity: document.getElementById('quantityInput').value,
+        unitPrice: document.getElementById('unitPriceInput').value,
+        category: document.getElementById('categoryInput').value,
+        location: document.getElementById('locationInput').value
+    };
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'api/inventory', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 201) {
+                console.log('Add successful', xhr.status);
+                let itemDetailsDiv = document.getElementById('itemDetailsDiv');
+                itemDetailsDiv.innerHTML = '';
+                loadAllInventory(); // Reload inventory list
+            } else {
+                console.error('Failed to add item:', xhr.status);
+            }
+        }
+    };
+    xhr.send(JSON.stringify(newItemData));
 }
