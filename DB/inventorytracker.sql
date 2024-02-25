@@ -46,9 +46,15 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `inventorytrackerdb`;
-INSERT INTO `inventory` (`id`, `item_name`, `quantity`, `unit_price`, `category`, `location`) VALUES (1, 'Hammer Ball-Peen', 3, 15.45, 'Tools', 'Tool Storage');
-INSERT INTO `inventory` (`id`, `item_name`, `quantity`, `unit_price`, `category`, `location`) VALUES (2, 'Hand Sanitizer', 15, 6.54, 'Health/Sanitation', 'Supply Office Storage');
-INSERT INTO `inventory` (`id`, `item_name`, `quantity`, `unit_price`, `category`, `location`) VALUES (3, 'Radio RM-34', 3, 265.35, 'Electronics', 'Supply Office Storage');
+INSERT INTO `inventory` (`id`, `item_name`, `quantity`, `unit_price`, `category`, `location`) VALUES (1, 'Hammer Sledge', 3, 45.45, 'Tools', 'Supply Office');
+INSERT INTO `inventory` (`id`, `item_name`, `quantity`, `unit_price`, `category`, `location`) VALUES (2, 'Mouse ', 5, 16.74, 'Electronics', 'Supply Office');
+INSERT INTO `inventory` (`id`, `item_name`, `quantity`, `unit_price`, `category`, `location`) VALUES (3, 'Laptop, Dell D-5', 7, 145.98, 'Electronics', 'Operations Office');
+INSERT INTO `inventory` (`id`, `item_name`, `quantity`, `unit_price`, `category`, `location`) VALUES (4, 'Hand Sanitizer', 15, 6.85, 'Sanitation', 'Supply Office Storage');
+INSERT INTO `inventory` (`id`, `item_name`, `quantity`, `unit_price`, `category`, `location`) VALUES (5, 'Toilet Paper 1PLY 50CT', 2, 16.50, 'Toiletries', 'Janitor Closet');
+INSERT INTO `inventory` (`id`, `item_name`, `quantity`, `unit_price`, `category`, `location`) VALUES (6, 'Keyboard, Dell ER-53', 5, 55.75, 'Electronics', 'Supply Office Storage');
+INSERT INTO `inventory` (`id`, `item_name`, `quantity`, `unit_price`, `category`, `location`) VALUES (7, 'FM Radio F-6', 4, 405.92, 'Communication/Electronics', 'Communications Office');
+INSERT INTO `inventory` (`id`, `item_name`, `quantity`, `unit_price`, `category`, `location`) VALUES (8, 'Coffee Cup, White', 16, 5.43, 'Sustenance', 'All Signed Out');
+INSERT INTO `inventory` (`id`, `item_name`, `quantity`, `unit_price`, `category`, `location`) VALUES (9, 'File Cabinet, Gray', 24, 47.85, 'Storage', 'All Signed Out');
 
 COMMIT;
 
