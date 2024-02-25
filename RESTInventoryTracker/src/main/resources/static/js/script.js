@@ -13,7 +13,7 @@ function loadAllInventory() {
 		if (xhr.readyState === xhr.DONE) {
 			if (xhr.status === 200) {
 				let inventory = JSON.parse(xhr.responseText);
-				displayInventoryList(inventory);
+				handleInventoryData(inventory);
 			} else {
 				console.error('Failed to fetch inventory:', xhr.status);
 			}
@@ -254,4 +254,33 @@ function addItem() {
 		}
 	};
 	xhr.send(JSON.stringify(newItemData));
+}
+
+// Function to calculate the total value of all items in the inventory
+function calculateTotalValue(inventory) {
+    let totalValue = 0;
+
+    inventory.forEach(function(item) {
+       let itemTotal = item.unitPrice * item.quantity;
+       totalValue += itemTotal;
+    });
+
+    return totalValue;
+}
+
+// Function to display the total value in the HTML
+function displayTotalValue(totalValue) {
+    // Convert totalValue to a string with 2 decimal places
+    let formattedTotalValue = parseFloat(totalValue.toFixed(2));
+    
+    // Display formatted total value in the HTML
+    let totalValueDiv = document.getElementById('totalValueDiv');
+    totalValueDiv.innerHTML = `<h2>Total Inventory Value: $${formattedTotalValue}</h2>`;
+}
+
+// Function to handle the inventory data after loading
+function handleInventoryData(inventory) {
+    displayInventoryList(inventory);
+    const totalValue = calculateTotalValue(inventory); 
+    displayTotalValue(totalValue); 
 }
