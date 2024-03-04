@@ -71,6 +71,6 @@ This project is an inventory tracker application designed to help users manage t
 
 - Using angular to bring up the frontend of the project instead of JavaScript.
 
-AWS Deployment link: http://44.222.56.254:8080/RESTInventoryTracker/api/inventory
+AWS Deployment link: http://44.222.56.254:8080/RESTInventoryTracker/
 
 
