@@ -10,6 +10,7 @@ This project is an inventory tracker application designed to help users manage t
 
 - Java
 - JavaScript
+- Angular
 - Spring Boot
 - SQL
 - REST
@@ -67,6 +68,8 @@ This project is an inventory tracker application designed to help users manage t
 - Using a Repository for my Entity streamlines the developing process.
 
 - Using my backend work to implement a fully functional frontend using JavaScript.
+
+- Using angular to bring up the frontend of the project instead of JavaScript.
 
 AWS Deployment link: http://44.222.56.254:8080/RESTInventoryTracker/api/inventory
 
