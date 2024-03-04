@@ -256,7 +256,6 @@ function addItem() {
 	xhr.send(JSON.stringify(newItemData));
 }
 
-// Function to calculate the total value of all items in the inventory
 function calculateTotalValue(inventory) {
     let totalValue = 0;
 
@@ -268,7 +267,6 @@ function calculateTotalValue(inventory) {
     return totalValue;
 }
 
-// Function to display the total value in the HTML
 function displayTotalValue(totalValue) {
     // Convert totalValue to a string with 2 decimal places
     let formattedTotalValue = parseFloat(totalValue.toFixed(2));
@@ -278,7 +276,6 @@ function displayTotalValue(totalValue) {
     totalValueDiv.innerHTML = `<h2>Total Inventory Value: $${formattedTotalValue}</h2>`;
 }
 
-// Function to handle the inventory data after loading
 function handleInventoryData(inventory) {
     displayInventoryList(inventory);
     const totalValue = calculateTotalValue(inventory); 

@@ -1,0 +1,55 @@
+<body>
+  <main>
+    <h1>Inventory List</h1>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Item Name</th>
+          </tr>
+        </thead>
+        <tbody id="inventoryTableBody">
+          <tr *ngFor="let item of inventory" (click)="displayInventory(item)">
+            <td>{{ item.id }}</td>
+            <td>{{ item.itemName }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div id="totalValueDiv">
+        <!-- Total price of items will be dynamically populated here including the quantity in calculations -->
+      </div>
+    </div>
+    <div>
+      <form id="addItemForm" (ngSubmit)="addInventory()">
+        <input type="text" id="itemName" name="itemName" placeholder="Item Name" [(ngModel)]="newInventory.itemName" required/>
+        <input type="number" id="quantity" name="quantity" placeholder="Quantity" [(ngModel)]="newInventory.quantity" required/>
+        <input type="number" id="unitPrice" name="unitPrice" placeholder="Unit Price" step="0.01" [(ngModel)]="newInventory.unitPrice" required/>
+        <input type="text" id="category" name="category" placeholder="Category" [(ngModel)]="newInventory.category" required/>
+        <input type="text" id="location" name="location" placeholder="Location" [(ngModel)]="newInventory.location"required/>
+        <button type="submit" class="btn btn-primary">Add Item</button>
+      </form>
+      <br>
+    </div>
+
+    <div id="itemDetailsDiv" *ngIf="selected">
+      <h2>Item Details</h2>
+      <p>ID: {{ selected.id }}</p>
+      <p>Item Name: <span *ngIf="!isEditing">{{ selected.itemName }}</span><input *ngIf="isEditing" type="text" [(ngModel)]="editInventory!.itemName"></p>
+      <p>Quantity: <span *ngIf="!isEditing">{{ selected.quantity }}</span><input *ngIf="isEditing" type="number" [(ngModel)]="editInventory!.quantity"></p>
+      <p>Price: <span *ngIf="!isEditing">{{ selected.unitPrice }}</span><input *ngIf="isEditing" type="number" [(ngModel)]="editInventory!.unitPrice"></p>
+      <p>Category: <span *ngIf="!isEditing">{{ selected.category }}</span><input *ngIf="isEditing" type="text" [(ngModel)]="editInventory!.category"></p>
+      <p>Location: <span *ngIf="!isEditing">{{ selected.location }}</span><input *ngIf="isEditing" type="text" [(ngModel)]="editInventory!.location"></p>
+
+      <button *ngIf="!isEditing" class="btn btn-primary" (click)="setEditInventory()">Edit</button>v
+      <button *ngIf="isEditing" class="btn btn-success" (click)="updateInventory()">Save</button>
+      <button *ngIf="!isEditing" class="btn btn-danger" (click)="deleteInventory(selected.id)">Delete</button>
+      </div>
+  </main>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"
+  ></script>
+</body>
