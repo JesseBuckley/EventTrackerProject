@@ -17,7 +17,7 @@
         </tbody>
       </table>
       <div id="totalValueDiv">
-        <!-- Total price of items will be dynamically populated here including the quantity in calculations -->
+          <h1>Total Value: {{ getTotalValue() | currency }}</h1>
       </div>
     </div>
     <div>
@@ -37,11 +37,11 @@
       <p>ID: {{ selected.id }}</p>
       <p>Item Name: <span *ngIf="!isEditing">{{ selected.itemName }}</span><input *ngIf="isEditing" type="text" [(ngModel)]="editInventory!.itemName"></p>
       <p>Quantity: <span *ngIf="!isEditing">{{ selected.quantity }}</span><input *ngIf="isEditing" type="number" [(ngModel)]="editInventory!.quantity"></p>
-      <p>Price: <span *ngIf="!isEditing">{{ selected.unitPrice }}</span><input *ngIf="isEditing" type="number" [(ngModel)]="editInventory!.unitPrice"></p>
+      <p>Price: <span *ngIf="!isEditing">{{ selected.unitPrice }}</span><input *ngIf="isEditing" type="number" [(ngModel)]="editInventory!.unitPrice">$</p>
       <p>Category: <span *ngIf="!isEditing">{{ selected.category }}</span><input *ngIf="isEditing" type="text" [(ngModel)]="editInventory!.category"></p>
       <p>Location: <span *ngIf="!isEditing">{{ selected.location }}</span><input *ngIf="isEditing" type="text" [(ngModel)]="editInventory!.location"></p>
 
-      <button *ngIf="!isEditing" class="btn btn-primary" (click)="setEditInventory()">Edit</button>v
+      <button *ngIf="!isEditing" class="btn btn-primary" (click)="setEditInventory()">Edit</button>
       <button *ngIf="isEditing" class="btn btn-success" (click)="updateInventory()">Save</button>
       <button *ngIf="!isEditing" class="btn btn-danger" (click)="deleteInventory(selected.id)">Delete</button>
       </div>

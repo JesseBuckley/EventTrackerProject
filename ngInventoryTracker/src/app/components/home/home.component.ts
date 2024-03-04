@@ -98,5 +98,13 @@ export class HomeComponent implements OnInit {
     return this.inventory.length;
   }
 
+  getTotalValue(): number {
+    let total = 0;
+    this.inventory.forEach(item => {
+      total += item.quantity * item.unitPrice;
+    });
+    return total;
+  }
+
   title = 'Inventory List';
 }
